@@ -1,10 +1,3 @@
-// main.cpp -- wiring untuk Task 2.
-// GANTI SimpleActionHandler / SimpleCombatResolver / SimpleProgressionRule
-// di sini kalau kamu mau pasang mekanik game pretest kamu sendiri.
-//
-// Compile: g++ -std=c++17 *.cpp -o game
-// Run:     ./game
-
 #include <memory>
 #include "GameSession.h"
 #include "SimpleActionHandler.h"
@@ -16,7 +9,7 @@ int main() {
         std::make_unique<SimpleActionHandler>(),
         std::make_unique<SimpleCombatResolver>(),
         std::make_unique<SimpleProgressionRule>(),
-        20 // starting HP
+        20
     );
 
     session.StartGame(5);

@@ -21,21 +21,17 @@ void GameSession::StartGame(int maxRounds) {
     while (!IsGameOver(round, maxRounds)) {
         std::cout << "\nRound " << round << "\n";
 
-        // 1. Player selects action -- didelegasikan.
         std::string action = m_actionHandler->PlayerAction(round);
         std::cout << "[ACTION] player chose: " << action << "\n";
 
-        // 2. System resolves combat.
         int damage = m_combatResolver->ResolveDamage(action);
         std::cout << "[RESOLVE] damage dealt: " << damage << "\n";
 
-        // 3. Reward dihitung, state di-update.
         int reward = m_progressionRule->ComputeReward(damage, round);
         m_score += reward;
-        m_hp -= 2; // contoh biaya HP tiap ronde, bagian dari invariant loop
+        m_hp -= 2;
         std::cout << "[UPDATE] score: " << m_score << " | hp: " << m_hp << "\n";
 
-        // 4. Check win/lose condition dilakukan oleh IsGameOver() di atas.
         ++round; // 5. Repeat
     }
 

@@ -5,13 +5,7 @@
 #include "IRewardRule.h"
 #include "ShopSystem.h"
 
-// RunSession = orkestrator murni.
-// ATURAN KERAS (jangan dilanggar):
-//   1. Urutan fase di StartRun() TIDAK BOLEH diubah.
-//   2. Tidak boleh ada logic scoring/reward/input generation di sini.
-//   3. Class ini hanya boleh tau tentang INTERFACE, bukan implementasi
-//      konkret (makanya header ini cuma include I*.h, bukan
-//      RandomInputGenerator.h atau ModifiedRewardRule.h).
+
 class RunSession {
 public:
     RunSession(std::unique_ptr<IInputGenerator> inputGen,
