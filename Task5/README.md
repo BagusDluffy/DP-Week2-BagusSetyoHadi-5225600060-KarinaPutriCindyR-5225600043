@@ -9,7 +9,9 @@ g++ -std=c++17 *.cpp -o run
 ## Struktur file
 | File | Peran |
 |---|---|
-| `TurnInput.h` | Struct data hasil input per ronde (berperan sebagai hand dummy) |
+| `TurnInput.h` | Struct input per ronde: `value` (tipe hand dummy 1-13) dan `cards` (5 kartu) |
+| `Card.h` | Struct kartu (rank + suit) dan `ToString()` |
+| `CardBuilder.h/.cpp` | Membuat 5 kartu acak yang sesuai dengan tipe hand dari `value` |
 | `IInputGenerator.h` | Interface generator input |
 | `ManualInputGenerator.h/.cpp` | Implementasi awal (fixed value) |
 | `RandomInputGenerator.h/.cpp` | Implementasi Modifikasi 1 |
@@ -72,6 +74,22 @@ pengganti hand asli dipakai nilai dummy `TurnInput.value` (1 sampai 13 dari
 | 12 | Flush House | 80 |
 | 13 | Flush Five | 100 |
 
+Selain `value`, `RandomInputGenerator` juga membagikan 5 kartu acak lewat
+`BuildHandForRank(value)`, lalu `RunSession` mencetaknya. Kartu dibuat
+mengikuti tipe hand dari `value`, jadi kartu yang tampil selalu cocok dengan
+hasil checker. Checker tetap hanya membaca `value` (belum ada logic kartu).
+Suit ditulis `S` (spades), `H` (hearts), `D` (diamonds), `C` (clubs), dan
+rank `J`, `Q`, `K`, `A`. Contoh output:
+
+```
+[PLAY] input generated: 12
+[PLAY] cards: KS KS KS 5S 5S
+[CHECK] Detected FLUSH HOUSE
+```
+
+Flush House, Five of a Kind, dan Flush Five memakai kartu duplikat (rank dan
+suit sama), seperti di Balatro.
+
 Chain dirakit dari hand terkuat ke terlemah, dan `HighCardChecker` menjadi
 ujung chain (selalu cocok).
 
@@ -118,4 +136,4 @@ menyambungkannya ke chain, tanpa mengubah checker yang sudah ada.
 | | Person 1 | Person 2 |
 |---|---|---|
 | Checker | HighCard, Pair, TwoPair, ThreeOfAKind, Straight, Flush | FullHouse, FourOfAKind, StraightFlush, RoyalFlush, FiveOfAKind, FlushHouse, FlushFive |
-| File lain | `HandRank.h`, `RandomInputGenerator.cpp`, `README.md` | `ChainScoringRule.h/.cpp` |
+| File lain | `HandRank.h`, `README.md`, `.gitignore` | `ChainScoringRule.h/.cpp`, `Card.h`, `CardBuilder.h/.cpp`, `TurnInput.h`, `RandomInputGenerator.cpp`, `ManualInputGenerator.cpp`, `RunSession.cpp` |
