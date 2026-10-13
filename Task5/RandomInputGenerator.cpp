@@ -1,6 +1,8 @@
 #include "RandomInputGenerator.h"
+#include "CardBuilder.h"
 #include <cstdlib>
 
 TurnInput RandomInputGenerator::Generate() {
-    return TurnInput{ (std::rand() % 13) + 1 };
+    int value = (std::rand() % 13) + 1;
+    return TurnInput{ value, BuildHandForRank(value) };
 }
